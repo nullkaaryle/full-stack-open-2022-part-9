@@ -9,11 +9,11 @@ type bmiObject = {
   weight: number;
   height: number;
   bmi: string;
-}
+};
 
 const bmiNumerical = (height: number, weight: number): BmiNumericalResult => {
   return weight / ((height / 100) ^ 2);
-}
+};
 
 const bmiTextual = (bmiNumerical: number): BmiTextualResult => {
   if (bmiNumerical > 25) {
@@ -23,7 +23,7 @@ const bmiTextual = (bmiNumerical: number): BmiTextualResult => {
   } else {
     return 'Normal (healthy weight)';
   }
-}
+};
 
 export const calculateBmi = (height: number, weight: number): bmiObject => {
 
@@ -31,7 +31,7 @@ export const calculateBmi = (height: number, weight: number): bmiObject => {
     weight,
     height,
     bmi: bmiTextual(bmiNumerical(height, weight))
-  }
+  };
 
   return bmiInfo;
-}
+};

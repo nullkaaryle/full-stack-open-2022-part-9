@@ -8,7 +8,6 @@ const parseName = (name: unknown): string => {
   if (!name || !isString(name)) {
     throw new Error('Incorrect or missing name');
   }
-
   return name;
 };
 
@@ -16,15 +15,14 @@ const parseOccupation = (occupation: unknown): string => {
   if (!occupation || !isString(occupation)) {
     throw new Error('Incorrect or missing occupation');
   }
-
   return occupation;
 };
+
 
 const parseSsn = (ssn: unknown): string => {
   if (!ssn || !isString(ssn)) {
     throw new Error('Incorrect or missing ssn');
   }
-
   return ssn;
 };
 

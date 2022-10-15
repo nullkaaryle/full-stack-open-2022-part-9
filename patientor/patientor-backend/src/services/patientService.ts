@@ -26,6 +26,7 @@ const findById = (id: string): Patient | undefined => {
   return patient;
 };
 
+
 const emptyList: string[] = [];
 
 const addPatient = (patient: NewPatient): Patient => {

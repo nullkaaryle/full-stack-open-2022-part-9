@@ -1,21 +1,19 @@
 import React from "react";
-import { Rating } from "@material-ui/lab";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import { withStyles } from "@material-ui/core";
+import { Rating } from "@mui/material";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { withStyles } from "@mui/styles";
 
 type BarProps = {
   rating: number;
   showText: boolean;
 };
 
-const StyledRating = withStyles({
-  iconFilled: {
-    color: "#ff6d75",
-  },
-  iconHover: {
-    color: "#ff3d47",
-  },
-})(Rating);
+const style = {
+  iconFilled: { color: "#ff6d75" },
+  iconHover: { color: "#ff3d47" }
+};
+
+const StyledRating = withStyles(style)(Rating);
 
 const HEALTHBAR_TEXTS = [
   "The patient is in great shape",
@@ -32,6 +30,8 @@ const HealthRatingBar = ({ rating, showText }: BarProps) => {
         value={4 - rating}
         max={4}
         icon={<FavoriteIcon fontSize="inherit" />}
+        emptyIcon={<FavoriteIcon fontSize="inherit" />}
+
       />
 
       {showText ? <p>{HEALTHBAR_TEXTS[rating]}</p> : null}

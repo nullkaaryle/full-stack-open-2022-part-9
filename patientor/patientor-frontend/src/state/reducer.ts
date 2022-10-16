@@ -1,6 +1,7 @@
 import { State } from "./state";
 import { Patient } from "../types";
 
+
 export type Action =
   | {
       type: "SET_PATIENT_LIST";
@@ -16,9 +17,34 @@ export type Action =
     };
 
 
+export const setPatientList = (patientList: Patient[]): Action => {
+  return {
+    type: 'SET_PATIENT_LIST',
+    payload:  patientList
+  };
+};
+
+export const addPatient = (patient: Patient): Action => {
+  return {
+    type: 'ADD_PATIENT',
+    payload: patient
+  };
+};
+
+export const setPatient = (patient: Patient): Action => {
+  return {
+    type: 'SET_PATIENT',
+    payload: patient
+  };
+};
+
+
 export const reducer = (state: State, action: Action): State => {
-  console.log('action on ', action);
+  console.log('state now: ', state);
+  console.log('called action', action);
+
   switch (action.type) {
+
     case "SET_PATIENT_LIST":
       return {
         ...state,
@@ -30,6 +56,7 @@ export const reducer = (state: State, action: Action): State => {
           ...state.patients
         }
       };
+
     case "ADD_PATIENT":
       return {
         ...state,
@@ -38,13 +65,18 @@ export const reducer = (state: State, action: Action): State => {
           [action.payload.id]: action.payload
         }
       };
+
        case "SET_PATIENT":
         const patient = action.payload;
       return {
         ...state,
           patient
       };
+
     default:
       return state;
   }
 };
+
+
+

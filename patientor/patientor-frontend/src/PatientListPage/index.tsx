@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 import { useStateValue } from "../state";
+import { setPatientList, addPatient } from "../state";
 
 import { apiBaseUrl } from "../constants";
 import { Patient } from "../types";
@@ -26,13 +27,14 @@ const PatientListPage = () => {
     setError(undefined);
   };
 
+
   React.useEffect(() => {
     const fetchPatientList = async () => {
       try {
         const { data: patientListFromApi } = await axios.get<Patient[]>(
           `${apiBaseUrl}/patients`
         );
-        dispatch({ type: "SET_PATIENT_LIST", payload: patientListFromApi });
+        dispatch(setPatientList(patientListFromApi));
       } catch (e) {
         console.error(e);
       }
@@ -47,6 +49,7 @@ const PatientListPage = () => {
         values
       );
       dispatch({ type: "ADD_PATIENT", payload: newPatient });
+      dispatch(addPatient(newPatient));
       closeModal();
     } catch (e: unknown) {
       if (axios.isAxiosError(e)) {

@@ -3,7 +3,8 @@ import patients from '../../data/patients';
 import {
   NewPatient,
   Patient,
-  PublicPatient
+  PublicPatient,
+  Entry
 } from '../types';
 
 import { v1 as uuid } from 'uuid';
@@ -27,13 +28,13 @@ const findById = (id: string): Patient | undefined => {
 };
 
 
-const emptyList: string[] = [];
+const emptyEntryList: Entry[] = [];
 
 const addPatient = (patient: NewPatient): Patient => {
 
   const newPatient = {
     id: id,
-    entries: emptyList,
+    entries: emptyEntryList,
     ...patient
   };
 

@@ -5,7 +5,7 @@ import { useStateValue } from "../state";
 import { setPatient } from "../state";
 
 import { apiBaseUrl } from "../constants";
-import { Patient } from "../types";
+import { Patient, Entry } from "../types";
 
 import { Box, Table, TableHead, Typography, TableCell, TableBody, TableRow } from "@mui/material";
 import FemaleIcon from '@mui/icons-material/Female';
@@ -17,15 +17,13 @@ const PatientInfoPage = () => {
   const { id } = useParams<{ id: string }>();
   const [{ patient }, dispatch] = useStateValue();
 
-  type PatientInfoType = Omit<Patient, "entries">;
-
   if (id !== patient.id) {
 
     const fetchPatient =
       async () => {
         try {
           if (id) {
-            const { data: patientFromApi } = await axios.get<PatientInfoType>(
+            const { data: patientFromApi } = await axios.get<Patient>(
               `${apiBaseUrl}/patients/${id}`);
             dispatch(setPatient(patientFromApi));
           }
@@ -48,6 +46,20 @@ const PatientInfoPage = () => {
     }
   };
 
+  const renderCodes = (patientEntry: Entry) => {
+    if (patientEntry.diagnosisCodes) {
+      return (
+        <div>
+          Diagnosis codes:
+          {patientEntry.diagnosisCodes.map((code) =>
+            <ul key={code}>
+              <li> {code} </li>
+            </ul>
+          )}
+        </div>
+      );
+    }
+  };
 
   return (
     <div className="App">
@@ -55,36 +67,66 @@ const PatientInfoPage = () => {
       <Box>
         <Typography align="left" variant="h4" style={{ marginBottom: "1em", marginTop: "2em" }}>
           {patient.name} {genderIcon()}
+
         </Typography>
       </Box>
-      {
-        patient === null ? 'höh' :
-          <Table style={{ marginBottom: "1em" }}>
 
-            <TableHead>
-              <TableRow>
-                <TableCell>Gender</TableCell>
-                <TableCell>Occupation</TableCell>
-                <TableCell>Date of birth</TableCell>
-                <TableCell>SSN</TableCell>
+      <Table style={{ marginBottom: "1em" }}>
 
-              </TableRow>
-            </TableHead>
+        <TableHead>
+          <TableRow>
+            <TableCell>Gender</TableCell>
+            <TableCell>Occupation</TableCell>
+            <TableCell>Date of birth</TableCell>
+            <TableCell>SSN</TableCell>
 
-            <TableBody>
-              <TableRow>
-                <TableCell>{patient.gender}</TableCell>
-                <TableCell>{patient.occupation}</TableCell>
-                <TableCell>{patient.dateOfBirth}</TableCell>
-                <TableCell>{patient.ssn}</TableCell>
-                <TableCell>
-                </TableCell>
-              </TableRow>
+          </TableRow>
+        </TableHead>
 
-            </TableBody>
+        <TableBody>
+          <TableRow>
+            <TableCell>{patient.gender}</TableCell>
+            <TableCell>{patient.occupation}</TableCell>
+            <TableCell>{patient.dateOfBirth}</TableCell>
+            <TableCell>{patient.ssn}</TableCell>
+            <TableCell>
+            </TableCell>
+          </TableRow>
 
-          </Table>
-      }
+        </TableBody>
+
+      </Table>
+
+      <Box>
+        <Typography align="left" variant="h6" style={{ marginBottom: "1em", marginTop: "2em" }}>
+          ENTRIES
+        </Typography>
+      </Box>
+
+      <Table style={{ marginBottom: "1em" }}>
+        <TableHead>
+          <TableRow>
+            <TableCell>Date</TableCell>
+            <TableCell>Specialist</TableCell>
+            <TableCell>Description</TableCell>
+          </TableRow>
+        </TableHead>
+
+        {patient.entries?.map((entry) => (
+          <TableBody key={entry.id}>
+            <TableRow >
+              <TableCell><b>{entry.date}</b></TableCell>
+              <TableCell><b>{entry.specialist}</b></TableCell>
+              <TableCell><i>{entry.description}</i></TableCell>
+              <TableCell>{renderCodes(entry)}</TableCell>
+            </TableRow>
+          </TableBody>
+
+        ))
+        }
+      </Table>
+
+
     </div >
   );
 };

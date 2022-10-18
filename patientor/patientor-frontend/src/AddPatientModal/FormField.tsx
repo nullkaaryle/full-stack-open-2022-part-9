@@ -7,7 +7,7 @@ import {
   TextField as TextFieldMUI,
   Typography,
 } from "@mui/material";
-import { Diagnosis, Gender } from "../types";
+import { Diagnose, Gender } from "../types";
 import { InputLabel } from "@mui/material";
 import Input from '@mui/material/Input';
 
@@ -105,7 +105,7 @@ export const DiagnosisSelection = ({
   setFieldValue,
   setFieldTouched,
 }: {
-  diagnoses: Diagnosis[];
+  diagnoses: Diagnose[];
   setFieldValue: FormikProps<{ diagnosisCodes: string[] }>["setFieldValue"];
   setFieldTouched: FormikProps<{ diagnosisCodes: string[] }>["setFieldTouched"];
 }) => {

@@ -12,10 +12,12 @@ import FemaleIcon from '@mui/icons-material/Female';
 import MaleIcon from '@mui/icons-material/Male';
 import TransgenderIcon from '@mui/icons-material/Transgender';
 
-
 const PatientInfoPage = () => {
   const { id } = useParams<{ id: string }>();
   const [{ patient }, dispatch] = useStateValue();
+  const [{ diagnoses }] = useStateValue();
+
+
 
   if (id !== patient.id) {
 
@@ -35,6 +37,7 @@ const PatientInfoPage = () => {
     void fetchPatient();
   }
 
+
   const genderIcon = () => {
     switch (patient.gender) {
       case 'female':
@@ -46,14 +49,20 @@ const PatientInfoPage = () => {
     }
   };
 
+
+  const getDiagnoseName = (code: string): string => {
+    return diagnoses[code]?.name;
+  };
+
   const renderCodes = (patientEntry: Entry) => {
+
     if (patientEntry.diagnosisCodes) {
       return (
         <div>
-          Diagnosis codes:
+          Diagnoses:
           {patientEntry.diagnosisCodes.map((code) =>
             <ul key={code}>
-              <li> {code} </li>
+              <li> {code}: {getDiagnoseName(code)} </li>
             </ul>
           )}
         </div>

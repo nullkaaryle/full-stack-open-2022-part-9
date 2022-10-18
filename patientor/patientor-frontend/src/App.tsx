@@ -1,19 +1,16 @@
 import React from "react";
-//import axios from "axios";
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
 import { Button, Divider, Container } from "@mui/material";
 
-//import { apiBaseUrl } from "./constants";
-//import { useStateValue } from "./state";
-//import { Patient } from "./types";
-
 import PatientListPage from "./PatientListPage";
 import PatientInfoPage from "./PatientInfoPage";
+import DiagnoseList from "./components/DiagnoseList";
+
 import { Typography } from "@mui/material";
 
 const App = () => {
-  //const [, dispatch] = useStateValue();
 
+  DiagnoseList();
 
   return (
     <div className="App">

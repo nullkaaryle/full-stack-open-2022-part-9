@@ -11,6 +11,7 @@ import { Box, Table, TableHead, Typography, TableCell, TableBody, TableRow } fro
 import FemaleIcon from '@mui/icons-material/Female';
 import MaleIcon from '@mui/icons-material/Male';
 import TransgenderIcon from '@mui/icons-material/Transgender';
+import EntryDetails from "./EntryDetails";
 
 const PatientInfoPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -18,9 +19,7 @@ const PatientInfoPage = () => {
   const [{ diagnoses }] = useStateValue();
 
 
-
   if (id !== patient.id) {
-
     const fetchPatient =
       async () => {
         try {
@@ -70,6 +69,7 @@ const PatientInfoPage = () => {
     }
   };
 
+
   return (
     <div className="App">
 
@@ -105,35 +105,47 @@ const PatientInfoPage = () => {
         </TableBody>
 
       </Table>
+      {patient.entries?.length > 0 ?
+        <div>
 
-      <Box>
-        <Typography align="left" variant="h6" style={{ marginBottom: "1em", marginTop: "2em" }}>
-          ENTRIES
-        </Typography>
-      </Box>
+          <Box>
+            <Typography align="left" variant="h6" style={{ marginBottom: "1em", marginTop: "2em" }}>
+              ENTRIES
+            </Typography>
+          </Box>
 
-      <Table style={{ marginBottom: "1em" }}>
-        <TableHead>
-          <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell>Specialist</TableCell>
-            <TableCell>Description</TableCell>
-          </TableRow>
-        </TableHead>
+          <Table style={{ marginBottom: "1em" }}>
+            <TableHead>
+              <TableRow>
+                <TableCell>Date</TableCell>
+                <TableCell>Specialist</TableCell>
+                <TableCell colSpan={2}>Description</TableCell>
+                <TableCell >Other</TableCell>
+              </TableRow>
+            </TableHead>
 
-        {patient.entries?.map((entry) => (
-          <TableBody key={entry.id}>
-            <TableRow >
-              <TableCell><b>{entry.date}</b></TableCell>
-              <TableCell><b>{entry.specialist}</b></TableCell>
-              <TableCell><i>{entry.description}</i></TableCell>
-              <TableCell>{renderCodes(entry)}</TableCell>
-            </TableRow>
-          </TableBody>
+            {patient.entries?.map((entry) => (
+              <TableBody key={entry.id}>
+                <TableRow >
+                  <TableCell><b>{entry.date}</b></TableCell>
+                  <TableCell><b>{entry.specialist}</b></TableCell>
+                  <TableCell><i>{entry.description}</i></TableCell>
+                  <TableCell>{renderCodes(entry)}</TableCell>
+                  <TableCell><EntryDetails entry={entry} /></TableCell>
+                </TableRow>
+              </TableBody>
 
-        ))
-        }
-      </Table>
+            ))
+            }
+          </Table>
+        </div>
+
+        : <Box>
+          <Typography align="left" variant="h6" style={{ marginBottom: "1em", marginTop: "2em" }}>
+            Patient has no entries.
+          </Typography>
+        </Box>
+      }
 
 
     </div >

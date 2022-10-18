@@ -17,6 +17,7 @@ import HealthRatingBar from "../components/HealthRatingBar";
 const PatientListPage = () => {
   const [{ patients }, dispatch] = useStateValue();
 
+
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string>();
 

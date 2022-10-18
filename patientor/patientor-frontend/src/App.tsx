@@ -4,6 +4,7 @@ import { Button, Divider, Container } from "@mui/material";
 
 import PatientListPage from "./PatientListPage";
 import PatientInfoPage from "./PatientInfoPage";
+
 import DiagnoseList from "./components/DiagnoseList";
 
 import { Typography } from "@mui/material";
